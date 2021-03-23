@@ -7,6 +7,7 @@ const croppedOutput = './croppedOutput.mp4';
 const scaledOutput = './scaledOutput.mp4';
 const blurredOutput = './blurredOutput.mp4';
 const stackedOutput = './stackedOutput.mp4';
+const overlay = './glancyLogo.png';
 
 const createLayoutA = async () => {
   try {
@@ -130,7 +131,8 @@ const createLayoutA = async () => {
     const combinedArgs = [
       '-i', input1, // reaction vid
       '-i', input2, // original content vid
-      '-filter_complex', `[0:v]crop=${croppedWidth}:${croppedHeight}:0:${offset},fps=30[v0],[1:v]scale=${croppedWidth}:${scaledHeight},fps=30[v1],[1:v]scale=${croppedWidth}:${scaledHeight},fps=30,crop=iw:${blurredVidHeight}:0:${goalHeight - (scaledHeight + croppedHeight)}[v1c],[v1c]boxblur=luma_radius=${blurredVidHeight / 2}:chroma_radius=10:luma_power=1[blurred],[v0][v1][blurred]vstack=inputs=3[v];[0:a][1:a]amix[a]`,
+      '-i', overlay,
+      '-filter_complex', `[0:v]crop=${croppedWidth}:${croppedHeight}:0:${offset},fps=30[v0],[1:v]scale=${croppedWidth}:${scaledHeight},fps=30[v1],[1:v]scale=${croppedWidth}:${scaledHeight},fps=30,crop=iw:${blurredVidHeight}:0:${goalHeight - (scaledHeight + croppedHeight)}[v1c],[v1c]boxblur=luma_radius=${blurredVidHeight / 2}:chroma_radius=10:luma_power=1[blurred],[v0][v1][blurred]vstack=inputs=3[combined];[combined][2]overlay=10:main_h-overlay_h-10[v];[0:a][1:a]amix[a]`,
       '-map', '[v]', // map video
       '-map', '[a]', // map audio
       // '-preset', 'ultrafast', // removed this as it is already fast and it was dramatically increasing final filesize
