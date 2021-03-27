@@ -12,10 +12,9 @@ const createFileInfo = (metadata) => {
   if (videoStreamIndex === undefined) throw new Error('Metadata must include a video stream!');
 
   const fileInfo = {
-    // orientation: null,
-    // framerate: null,
     height: null,
     width: null,
+    duration: null,
   };
 
   // const landscapeOrientations = ['90', '-90', 90, -90];
@@ -30,6 +29,7 @@ const createFileInfo = (metadata) => {
 
   fileInfo.width = metadataVideoStream.width;
   fileInfo.height = metadataVideoStream.height;
+  fileInfo.duration = parseFloat(metadataVideoStream.duration);
 
   // fileInfo.framerate = metadataVideoStream.r_frame_rate.split('/')[0];
 
