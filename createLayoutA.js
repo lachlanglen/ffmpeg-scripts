@@ -1,7 +1,7 @@
 const childProcessPromise = require('./utils/child_process_promise');
 const { createFileInfo } = require('./utils/create_file_info');
 
-// const input1 = './trimmed10secs.mp4';
+// const input1 = './reactionTrimmed10secs.mp4';
 // const input1 = './reaction_for_video_compressed.mp4'; // reaction
 const input1 = './bad_reaction.mp4';
 const input2 = './landscape_video_compressed.mp4'; // content

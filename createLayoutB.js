@@ -1,10 +1,11 @@
 const childProcessPromise = require('./utils/child_process_promise');
 const { createFileInfo } = require('./utils/create_file_info');
 
-// const input1 = './trimmed.mp4'; // reaction video trimmed to exactly the same length as content video
-const input1 = './reaction_for_video_compressed.mp4'; // reaction
-// const input2 = './portrait_video_compressed.mp4'; // content
-const input2 = './video-content-almost-square.mp4';
+// const input1 = './reactionTrimmed10secs.mp4';
+// const input1 = './reaction_for_video_compressed.mp4'; // reaction
+const input1 = './bad_reaction.mp4';
+const input2 = './portrait_video_compressed.mp4'; // content
+// const input2 = './video-content-almost-square.mp4';
 // const input2 = './video-content-perfect-square.mp4';
 const stackedOutput = './stackedOutput.mp4';
 const overlay = './glancyLogo.png';
