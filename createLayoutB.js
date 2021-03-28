@@ -1,10 +1,11 @@
 const childProcessPromise = require('./utils/child_process_promise');
 const { createFileInfo } = require('./utils/create_file_info');
 
-// const input1 = './trimmed.mp4'; // reaction video trimmed to exactly the same length as content video
-const input1 = './reaction_for_video_compressed.mp4'; // reaction
-// const input2 = './portrait_video_compressed.mp4'; // content
-const input2 = './video-content-almost-square.mp4';
+// const input1 = './reactionTrimmed10secs.mp4';
+// const input1 = './reaction_for_video_compressed.mp4'; // reaction
+const input1 = './bad_reaction.mp4';
+const input2 = './portrait_video_compressed.mp4'; // content
+// const input2 = './video-content-almost-square.mp4';
 // const input2 = './video-content-perfect-square.mp4';
 const stackedOutput = './stackedOutput.mp4';
 const overlay = './glancyLogo.png';
@@ -110,7 +111,7 @@ const createLayoutB = async () => {
       return `[${inputName}]crop=${croppedWidth}:${croppedHeight}:0:${offset},fps=30[${outputName}]`;
     };
 
-    const generateScaleCommand = ({ inputName }) => {
+    const generateScaleCommand = ({ inputName, outputName }) => {
       let command = '';
       let scaleOutput = 'scaled';
       if (!areSameWidth) {
@@ -121,7 +122,7 @@ const createLayoutB = async () => {
         };
         command += `[${scaleOutput}];`;
       } else { // all we need to do is transcode content video to 30fps if it has not already had this applied in filler command
-        if (!fillerLengthToGenerate) command += `[1:v]fps=30[v1]`
+        if (!fillerLengthToGenerate) command += `[1:v]fps=30[${outputName}]`
       }
 
       let vstackInput1, vstackInput2;
@@ -136,7 +137,7 @@ const createLayoutB = async () => {
         }
       } else { // inputs are same width
         vstackInput1 = 'v0';
-        vstackInput2 = fillerLengthToGenerate ? 'v1filled' : 'v1';
+        vstackInput2 = fillerLengthToGenerate ? 'v1filled' : outputName;
       };
 
       return {
