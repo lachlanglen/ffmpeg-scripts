@@ -110,7 +110,7 @@ const createLayoutB = async () => {
       return `[${inputName}]crop=${croppedWidth}:${croppedHeight}:0:${offset},fps=30[${outputName}]`;
     };
 
-    const generateScaleCommand = ({ inputName }) => {
+    const generateScaleCommand = ({ inputName, outputName }) => {
       let command = '';
       let scaleOutput = 'scaled';
       if (!areSameWidth) {
@@ -121,7 +121,7 @@ const createLayoutB = async () => {
         };
         command += `[${scaleOutput}];`;
       } else { // all we need to do is transcode content video to 30fps if it has not already had this applied in filler command
-        if (!fillerLengthToGenerate) command += `[1:v]fps=30[v1]`
+        if (!fillerLengthToGenerate) command += `[1:v]fps=30[${outputName}]`
       }
 
       let vstackInput1, vstackInput2;
@@ -136,7 +136,7 @@ const createLayoutB = async () => {
         }
       } else { // inputs are same width
         vstackInput1 = 'v0';
-        vstackInput2 = fillerLengthToGenerate ? 'v1filled' : 'v1';
+        vstackInput2 = fillerLengthToGenerate ? 'v1filled' : outputName;
       };
 
       return {
